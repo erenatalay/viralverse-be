@@ -6,6 +6,12 @@ import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import appConfig from './config/app.config';
 import { UsersModule } from './users/users.modules';
+import { SessionModule } from './session/session.module';
+import { MailModule } from './mail/mail.module';
+import { MailerModule } from './mailer/mailer.module';
+import { AuthModule } from './auth/auth.module';
+import mailConfig from './config/mail.config';
+import authConfig from './config/auth.config';
 
 @Module({
   imports: [
@@ -14,6 +20,8 @@ import { UsersModule } from './users/users.modules';
       load: [
         databaseConfig,
         appConfig,
+        mailConfig,
+        authConfig
       ],
       envFilePath: ['../env'],
     }),
@@ -23,7 +31,11 @@ import { UsersModule } from './users/users.modules';
         return new DataSource(options).initialize();
       },
     }),
-    UsersModule
+    UsersModule,
+    SessionModule,
+    MailModule,
+    MailerModule,
+    AuthModule
   ]
 })
 export class AppModule {}
